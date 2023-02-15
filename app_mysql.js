@@ -65,5 +65,33 @@ app.post('/api/insert', async (req, res) => {
 
 
     //res.send(result);
-    res.sendFile( __dirname + '/public/adduser.html');
+    res.sendFile( __dirname + '/public/login.html');
+})
+
+
+//로그인 라우터
+app.post('/api/login', async (req, res) => {
+
+    const paramId = req.body.id;
+    const paramPassword = req.body.password;
+
+    console.log('/api/login executed...');
+    console.log(req.body.id);
+    console.log(req.body.password);
+
+    const logIn = await mysql.query('userLogIn',
+        [paramId, paramPassword]    
+    );   //sql.js 파일에 작성된 userList 쿼리 실행
+
+    console.log(logIn.length>0);
+
+    if(logIn.length>0){
+        res.send("로그인에 성공하였습니다.")
+    }    
+    else{
+        res.send("로그인에 실패하였습니다.")
+    }
+
+    //res.send(logIn);
+
 })
